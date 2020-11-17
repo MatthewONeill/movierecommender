@@ -1,5 +1,6 @@
 import React from 'react';
 import "../App.css";
+import Movie from './Movie/Movie';
 
 class GoodList extends React.Component{
     constructor(props){
@@ -9,8 +10,7 @@ class GoodList extends React.Component{
     render(){
         return(
             <div className="goodColumn">
-                <p>First Good Movie</p>
-                <p>Second Good Movie</p>
+                <Movie />
             </div>
         );
     }
