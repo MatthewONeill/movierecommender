@@ -1,4 +1,7 @@
 import './App.css';
+import BadList from './Components/BadList';
+import GoodList from './Components/GoodList'
+import GenerateMovie from './Components/GenerateMovie';
 
 function App() {
   return (
@@ -16,21 +19,9 @@ function App() {
       </div>
 
       <div className="container">
-        <div className="badColumn">
-          <p>First Bad Movie</p>
-          <p>Second Bad Movie</p>
-        </div>
-        <div className="movieColumn">
-          <p>Generated Movie</p>
-          <div className="buttons">
-            <button className="noButton">No</button>
-            <button className="yesButton">Yes</button>
-          </div>
-        </div>
-        <div className="goodColumn">
-          <p>First Good Movie</p>
-          <p>Second Good Movie</p>
-        </div>
+        <BadList />
+        <GenerateMovie />
+        <GoodList />
       </div>
     </div>
   );
