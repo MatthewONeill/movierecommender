@@ -8,7 +8,7 @@ function App() {
           <h1>Bad List</h1>
         </div>
         <div className="movieColumn">
-          <button>New Movie</button>
+          <button className="newMovieButton">New Movie</button>
         </div>
         <div className="goodColumn">
           <h1>Good List</h1>
@@ -17,19 +17,19 @@ function App() {
 
       <div className="container">
         <div className="badColumn">
-          <p>bad1</p>
-          <p>bad2</p>
+          <p>First Bad Movie</p>
+          <p>Second Bad Movie</p>
         </div>
         <div className="movieColumn">
           <p>Generated Movie</p>
           <div className="buttons">
-            <button>no</button>
-            <button>yes</button>
+            <button className="noButton">No</button>
+            <button className="yesButton">Yes</button>
           </div>
         </div>
         <div className="goodColumn">
-          <p>good1</p>
-          <p>good2</p>
+          <p>First Good Movie</p>
+          <p>Second Good Movie</p>
         </div>
       </div>
     </div>
