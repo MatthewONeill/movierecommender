@@ -10,8 +10,8 @@ class GoodList extends React.Component{
     }
 
     movieList(){
-        return this.props.movies.map(currentMovie => {
-            return <Movie {...currentMovie} deleteMovie={this.deleteMovie} />
+        return this.props.movies.map((currentMovie, index) => {
+            return <Movie {...currentMovie} deleteMovie={this.deleteMovie} key={index}/>
         })
     }
 
