@@ -30,7 +30,7 @@ app.post('/goodlist/add', (req,res) => {
 app.get('/badlist', (req,res) => {
   let ref = adb.ref('badMovies');
 
-  ref.on("value", (snapshot) => {
+  ref.once("value", (snapshot) => {
     let array = [];
     snapshot.forEach((child) => {
       array.push((child.val()));
@@ -46,7 +46,7 @@ app.get('/badlist', (req,res) => {
 app.get('/goodlist', (req,res) => {
   let ref = adb.ref('goodMovies');
 
-  ref.on("value", (snapshot) => {
+  ref.once("value", (snapshot) => {
     let array = [];
     snapshot.forEach((child) => {
       array.push((child.val()));
