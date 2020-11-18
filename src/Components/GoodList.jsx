@@ -1,17 +1,9 @@
-import Axios from 'axios';
 import React from 'react';
 import "../App.css";
 import Movie from './Movie/Movie';
-import axios from 'axios';
+
 
 class GoodList extends React.Component{
-    constructor(props){
-        super(props);
-
-        this.state = {
-            movies: []
-        }
-    }
 
     deleteMovie = (id) => {
         //delete from database

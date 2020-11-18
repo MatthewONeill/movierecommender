@@ -1,6 +1,4 @@
 import './App.css';
-import BadList from './Components/BadList';
-import GoodList from './Components/GoodList'
 import GenerateMovie from './Components/GenerateMovie';
 
 function App() {
