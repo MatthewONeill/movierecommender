@@ -1,20 +1,25 @@
+import Axios from 'axios';
 import React from 'react';
 import "../App.css";
 import Movie from './Movie/Movie';
+import axios from 'axios';
 
 class GoodList extends React.Component{
     constructor(props){
         super(props);
 
         this.state = {
-            movies: [
-                {
-                    title: "11:55",
-                    image: "/cq8YSZwPXK0M4HwofurhNOfUaFt.jpg",
-                    releaseDate: "2008-10-23"
-                }
-            ]
+            movies: []
         }
+    }
+
+    componentDidMount(){
+        axios.get("http://localhost:5001/movie-recommender-3779d/us-central1/app/goodlist")
+            .then(response => {
+                this.setState({
+                    movies: response.data
+                })
+            })
     }
 
     deleteMovie = (id) => {
