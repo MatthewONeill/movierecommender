@@ -7,7 +7,13 @@ class GoodList extends React.Component{
         super(props);
 
         this.state = {
-            movies: []
+            movies: [
+                {
+                    title: "11:55",
+                    image: "/cq8YSZwPXK0M4HwofurhNOfUaFt.jpg",
+                    releaseDate: "2008-10-23"
+                }
+            ]
         }
     }
 
@@ -16,15 +22,15 @@ class GoodList extends React.Component{
     }
 
     movieList(){
-        return this.state.posts.map(currentMovie => {
-            return <Movie movie={currentMovie} deleteMovie={this.deleteMovie} key={currentMovie._id} />
+        return this.state.movies.map(currentMovie => {
+            return <Movie {...currentMovie} deleteMovie={this.deleteMovie} />
         })
     }
 
     render(){
         return(
             <div className="goodColumn">
-                <Movie />
+                {this.movieList()}
             </div>
         );
     }

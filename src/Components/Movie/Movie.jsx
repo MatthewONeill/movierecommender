@@ -2,41 +2,21 @@ import React from 'react';
 import "./Movie.css";
 
 class Movie extends React.Component{
-    constructor(props){
-        super(props);
-    }
-
+    
     render(){
         return(
-            <div className="movieContainer">
-                
+            <div className="movieContainer"> 
                 <div className="movieMain">
                     <div className="movieTitle">
-                        Title
+                        {this.props.title}
                     </div>
                     <div className="movieImage">
-                        Image
-                    </div>
-                </div>
-                
-                <div className="movieInfo">
-                    <div className="movieGenres">
-                        Genres
-                    </div>
-                    <div className="movieOverview">
-                        Overview
+                        <img src={`https://image.tmdb.org/t/p/w500${this.props.image}`} alt="No Poster Found" style={{width: "100px"}}/>
                     </div>
                     <div className="movieReleaseDate">
-                        Release Date
-                    </div>
-                    <div className="movieRuntime">
-                        Runtime
-                    </div>
-                    <div className="movieVoteAverage">
-                        Movie Rating
+                        {this.props.releaseDate}
                     </div>
                 </div>
-                
             </div>
         );
     }

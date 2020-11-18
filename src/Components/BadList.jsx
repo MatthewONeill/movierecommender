@@ -16,15 +16,15 @@ class BadList extends React.Component{
     }
 
     movieList(){
-        return this.state.posts.map(currentMovie => {
-            return <Movie movie={currentMovie} deleteMovie={this.deleteMovie} key={currentMovie._id} />
+        return this.state.movies.map(currentMovie => {
+            return <Movie {...currentMovie} deleteMovie={this.deleteMovie} />
         })
     }
 
     render(){
         return(
             <div className="badColumn">
-                <Movie /> 
+                {this.movieList()}
             </div>
         );
     }

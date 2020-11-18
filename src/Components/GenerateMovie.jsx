@@ -18,9 +18,9 @@ class GenerateMovie extends React.Component{
 
     generateRandomMovie = () => {
         
-        let random = Math.floor((Math.random() * 20) + 2000);
-        let random2 = Math.floor((Math.random() * 30) + 1);
-        let random3 = Math.floor((Math.random() * 19));
+        let random = Math.floor((Math.random() * 20) + 2000); //random year for primary release year
+        let random2 = Math.floor((Math.random() * 30) + 1); // random page starting from 1
+        let random3 = Math.floor((Math.random() * 19)); //random item from the page
 
         axios.get('https://api.themoviedb.org/3/discover/movie?api_key='+process.env.REACT_APP_API_KEY + '&sort_by=vote_average.gte=0&primary_release_year=' + random + '&page=' + random2)
             .then(response => {
@@ -38,6 +38,28 @@ class GenerateMovie extends React.Component{
             })
     }
 
+    sendToBadList = () => {
+        const movie = {
+            title: this.state.title,
+            image: this.state.image,
+            releaseDate: this.state.releaseDate
+        }
+
+        axios.post('http://localhost:5001/movie-recommender-3779d/us-central1/app/badlist/add', movie)
+            .then()
+    }
+
+    sendToGoodList = () => {
+        const movie = {
+            title: this.state.title,
+            image: this.state.image,
+            releaseDate: this.state.releaseDate
+        }
+
+        axios.post('http://localhost:5001/movie-recommender-3779d/us-central1/app/goodlist/add', movie)
+            .then()
+    }
+
     render(){
         return(
             <div className="movieColumn">
@@ -48,7 +70,7 @@ class GenerateMovie extends React.Component{
                         {this.state.title}
                     </div>
                     <div className="movieImage">
-                        Image
+                        <img src={`https://image.tmdb.org/t/p/w500${this.state.image}`} alt="No Poster Found"/>
                     </div>
                     <div className="movieOverview">
                         {this.state.overview}
@@ -60,13 +82,13 @@ class GenerateMovie extends React.Component{
                         Length (Mins): {this.state.runtime}
                     </div>
                     <div className="movieVoteAverage">
-                        Rating: {this.state.movieRating}
+                        Rating (/10): {this.state.movieRating}
                     </div>
                 </div>
                 
                 <div className="buttons">
-                    <button className="noButton">No</button>
-                    <button className="yesButton">Yes</button>
+                    <button className="noButton" onClick={this.sendToBadList}>No</button>
+                    <button className="yesButton" onClick={this.sendToGoodList}>Yes</button>
                 </div>
             </div>
         );
