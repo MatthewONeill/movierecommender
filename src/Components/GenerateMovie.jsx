@@ -46,7 +46,6 @@ class GenerateMovie extends React.Component{
         }
 
         axios.post('http://localhost:5001/movie-recommender-3779d/us-central1/app/badlist/add', movie)
-            .then()
     }
 
     sendToGoodList = () => {
@@ -57,7 +56,6 @@ class GenerateMovie extends React.Component{
         }
 
         axios.post('http://localhost:5001/movie-recommender-3779d/us-central1/app/goodlist/add', movie)
-            .then()
     }
 
     render(){
