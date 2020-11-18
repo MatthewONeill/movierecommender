@@ -19,3 +19,48 @@
   text-align: center
 }
 
+h1{
+  font-family: 'Nunito', sans-serif;
+  font-weight: bolder;
+}
+
+p{
+  font-family: 'Nunito', sans-serif;
+}
+
+button{
+  width: 100px;
+  height: 30px;
+  border: solid 1px transparent;
+  border-radius: 5px;
+  font-size: 15px;
+  font-family: 'Quicksand', sans-serif;
+  font-weight: bold;
+}
+
+.noButton{
+  background-color: #e34234;
+  color: #FAFAFA;
+}
+
+.yesButton{
+  background-color: #50C878;
+  color: #FAFAFA;
+}
+
+.newMovieButton{
+  background-color: #73C2FB;
+  color: #FAFAFA;
+}
+
+@media(min-width: 360px){
+  .noButton{
+    margin-right: 0px;
+  }
+}
+
+@media(min-width: 760px){
+  .noButton{
+    margin-right: 10px;
+  }
+}
