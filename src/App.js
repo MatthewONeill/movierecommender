@@ -18,11 +18,9 @@ function App() {
         </div>
       </div>
 
-      <div className="container">
-        <BadList />
-        <GenerateMovie />
-        <GoodList />
-      </div>
+      
+      <GenerateMovie />
+
     </div>
   );
 }

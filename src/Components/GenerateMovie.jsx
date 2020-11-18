@@ -1,6 +1,8 @@
 import React from 'react';
 import axios from 'axios';
 import "../App.css";
+import GoodList from './GoodList';
+import BadList from './BadList';
 
 class GenerateMovie extends React.Component{
     constructor(props){
@@ -13,7 +15,25 @@ class GenerateMovie extends React.Component{
             releaseDate: "",
             runtime: 0,
             movieRating: 0,
+            goodList: [],
+            badList: []
         }
+    }
+
+    componentDidMount(){
+        axios.get("http://localhost:5001/movie-recommender-3779d/us-central1/app/badlist")
+            .then(response => {
+                this.setState({
+                    badList: response.data
+                })
+            })
+
+        axios.get("http://localhost:5001/movie-recommender-3779d/us-central1/app/goodlist")
+            .then(response => {
+                this.setState({
+                    goodList: response.data
+                })
+            })
     }
 
     generateRandomMovie = () => {
@@ -38,56 +58,84 @@ class GenerateMovie extends React.Component{
             })
     }
 
-    sendToBadList = () => {
+    sendToBadList = async() => {
         const movie = {
             title: this.state.title,
             image: this.state.image,
             releaseDate: this.state.releaseDate
         }
 
-        axios.post('http://localhost:5001/movie-recommender-3779d/us-central1/app/badlist/add', movie)
+        await axios.post('http://localhost:5001/movie-recommender-3779d/us-central1/app/badlist/add', movie)
+
+        this.refreshBadList();
     }
 
-    sendToGoodList = () => {
+    sendToGoodList = async() => {
         const movie = {
             title: this.state.title,
             image: this.state.image,
             releaseDate: this.state.releaseDate
         }
 
-        axios.post('http://localhost:5001/movie-recommender-3779d/us-central1/app/goodlist/add', movie)
+         await axios.post('http://localhost:5001/movie-recommender-3779d/us-central1/app/goodlist/add', movie)
+
+         this.refreshGoodList();
+    }
+
+    refreshBadList = () => {
+        axios.get("http://localhost:5001/movie-recommender-3779d/us-central1/app/badlist")
+            .then(response => {
+                this.setState({
+                    badList: response.data
+                })
+            })
+    }
+
+    refreshGoodList = () => {
+        axios.get("http://localhost:5001/movie-recommender-3779d/us-central1/app/goodlist")
+            .then(response => {
+                this.setState({
+                    goodList: response.data
+                })
+            })
     }
 
     render(){
         return(
-            <div className="movieColumn">
-                <button className="newMovieButton" style={{marginBottom: "20px"}} onClick={this.generateRandomMovie}>New Movie</button>
-                
-                <div className="container" style={{display: "flex", flexDirection: "column", paddingBottom: "20px"}} >
-                    <div className="movieTitle">
-                        {this.state.title}
+            <div className="container">
+                <BadList movies={this.state.badList}/>
+
+                <div className="movieColumn">
+                    <button className="newMovieButton" style={{marginBottom: "20px"}} onClick={this.generateRandomMovie}>New Movie</button>
+                    
+                    <div className="container" style={{display: "flex", flexDirection: "column", paddingBottom: "20px"}} >
+                        <div className="movieTitle">
+                            {this.state.title}
+                        </div>
+                        <div className="movieImage">
+                            <img src={`https://image.tmdb.org/t/p/w500${this.state.image}`} alt="No Poster Found"/>
+                        </div>
+                        <div className="movieOverview">
+                            {this.state.overview}
+                        </div>
+                        <div className="movieReleaseDate">
+                            Release Date: {this.state.releaseDate}
+                        </div>
+                        <div className="movieRuntime">
+                            Length (Mins): {this.state.runtime}
+                        </div>
+                        <div className="movieVoteAverage">
+                            Rating (/10): {this.state.movieRating}
+                        </div>
                     </div>
-                    <div className="movieImage">
-                        <img src={`https://image.tmdb.org/t/p/w500${this.state.image}`} alt="No Poster Found"/>
-                    </div>
-                    <div className="movieOverview">
-                        {this.state.overview}
-                    </div>
-                    <div className="movieReleaseDate">
-                        Release Date: {this.state.releaseDate}
-                    </div>
-                    <div className="movieRuntime">
-                        Length (Mins): {this.state.runtime}
-                    </div>
-                    <div className="movieVoteAverage">
-                        Rating (/10): {this.state.movieRating}
+                    
+                    <div className="buttons">
+                        <button className="noButton" onClick={this.sendToBadList}>No</button>
+                        <button className="yesButton" onClick={this.sendToGoodList}>Yes</button>
                     </div>
                 </div>
-                
-                <div className="buttons">
-                    <button className="noButton" onClick={this.sendToBadList}>No</button>
-                    <button className="yesButton" onClick={this.sendToGoodList}>Yes</button>
-                </div>
+
+                <GoodList movies={this.state.goodList}/>
             </div>
         );
     }

@@ -13,21 +13,12 @@ class GoodList extends React.Component{
         }
     }
 
-    componentDidMount(){
-        axios.get("http://localhost:5001/movie-recommender-3779d/us-central1/app/goodlist")
-            .then(response => {
-                this.setState({
-                    movies: response.data
-                })
-            })
-    }
-
     deleteMovie = (id) => {
         //delete from database
     }
 
     movieList(){
-        return this.state.movies.map(currentMovie => {
+        return this.props.movies.map(currentMovie => {
             return <Movie {...currentMovie} deleteMovie={this.deleteMovie} />
         })
     }
