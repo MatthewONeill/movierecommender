@@ -1,14 +1,15 @@
 import React from 'react';
 
-class Navbar extends React.Component{
+class Login extends React.Component{
+
 
     render(){
         return(
             <div>
-                
+
             </div>
         );
     }
 }
 
-export default Navbar;
+export default Login;
