@@ -34,7 +34,6 @@ app.post('/users/create', (req,res) => {
 //Log in to a user profile
 //The actual login verification will be done clientside
 //This route should only be called when the frontend has done its firebase login
-//Is this bad SE... Yes. But thats what you get when you use trendy Google crap.
 app.post('/users/login', (req,res) => {
   admin.auth().getUserByEmail(req.body.email)
   .then(function(userRecord) {
