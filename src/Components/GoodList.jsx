@@ -2,28 +2,16 @@ import React from 'react';
 import "../App.css";
 import Movie from './Movie/Movie';
 
-class GoodList extends React.Component{
-    constructor(props){
-        super(props);
 
-        this.state = {
-            movies: [
-                {
-                    title: "11:55",
-                    image: "/cq8YSZwPXK0M4HwofurhNOfUaFt.jpg",
-                    releaseDate: "2008-10-23"
-                }
-            ]
-        }
-    }
+class GoodList extends React.Component{
 
     deleteMovie = (id) => {
         //delete from database
     }
 
     movieList(){
-        return this.state.movies.map(currentMovie => {
-            return <Movie {...currentMovie} deleteMovie={this.deleteMovie} />
+        return this.props.movies.map((currentMovie, index) => {
+            return <Movie {...currentMovie} deleteMovie={this.deleteMovie} key={index}/>
         })
     }
 
