@@ -1,6 +1,4 @@
 import React from 'react';
-import BadList from './BadList';
-import GoodList from './GoodList'
 import GenerateMovie from './GenerateMovie';
 
 class Main extends React.Component{
