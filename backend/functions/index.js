@@ -32,17 +32,19 @@ app.post('/users/create', (req,res) => {
 });
 
 //Log in to a user profile
+//The actual login verification will be done clientside
+//This route should only be called when the frontend has done its firebase login
+//Is this bad SE... Yes. But thats what you get when you use trendy Google crap.
 app.post('/users/login', (req,res) => {
   admin.auth().getUserByEmail(req.body.email)
   .then(function(userRecord) {
     console.log('Successfully fetched user data:', userRecord.toJSON());
     req.session.userID = userRecord.uid;
     req.session.loggedIn = true;
-    console.log(req.session);
     res.sendStatus(200);
   })
   .catch(function(error) {
-   console.log('Error fetching user data:', error);
+   console.log('Error fetching user data:', error.errorInfo);
    res.sendStatus(400);
   });
 });
