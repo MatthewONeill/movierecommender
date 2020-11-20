@@ -4,9 +4,10 @@ const express = require('express');
 const cors = require('cors');
 const app = express();
 app.use(cors({ origin: true }));
+require('dotenv').config();
 
 //Firebase initialization
-var serviceAccount = require("./movie-recommender-3779d-firebase-adminsdk-lw0o8-98f56ee455.json");
+var serviceAccount = require(process.env.FIREBASE_CONNECTION);
 admin.initializeApp({
   credential: admin.credential.cert(serviceAccount),
   databaseURL: "https://movie-recommender-3779d.firebaseio.com"
@@ -29,9 +30,13 @@ app.post('/goodlist/add', (req,res) => {
 app.get('/badlist', (req,res) => {
   let ref = adb.ref('badMovies');
 
-  ref.on("value", function(snapshot){
-    return res.send(snapshot.val()).status(200);
-  }, function (error){
+  ref.once("value", (snapshot) => {
+    let array = [];
+    snapshot.forEach((child) => {
+      array.push((child.val()));
+    })
+    return res.send(array).status(200);
+  }, (error) => {
     console.log("Error:" + error.code);
     return res.sendStatus(400);
   });
@@ -41,9 +46,13 @@ app.get('/badlist', (req,res) => {
 app.get('/goodlist', (req,res) => {
   let ref = adb.ref('goodMovies');
 
-  ref.on("value", function(snapshot){
-    return res.send(snapshot.val()).status(200);
-  }, function (error){
+  ref.once("value", (snapshot) => {
+    let array = [];
+    snapshot.forEach((child) => {
+      array.push((child.val()));
+    })
+    return res.send(array).status(200);
+  }, (error) => {
     console.log("Error:" + error.code);
     return res.sendStatus(400);
   });
