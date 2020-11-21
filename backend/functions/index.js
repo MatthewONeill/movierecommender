@@ -60,4 +60,4 @@ app.get('/goodlist', (req,res) => {
 
 
 exports.app = functions.https.onRequest(app);
-//Note: run with 'node run serve'
+//Note: run with 'npm run serve'
