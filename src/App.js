@@ -1,25 +1,19 @@
 import './App.css';
-import GenerateMovie from './Components/GenerateMovie';
+import { BrowserRouter as Router, Route } from 'react-router-dom';
+import Main from './Components/Main';
+import Login from './Components/Login/Login';
+
+import Navbar from './Components/Navbar/Navbar';
 
 function App() {
   return (
-    <div className="App">
-      <div className="container">
-        <div className="badColumn">
-          <h1>Bad List</h1>
-        </div>
-        <div className="movieColumn"> 
-          <h1>Movie Recommender</h1>
-        </div>
-        <div className="goodColumn">
-          <h1>Good List</h1>
-        </div>
+    <Router>
+      <div className="App">
+        <Navbar />
+        <Route path="/" exact component={Main} />
+        <Route path="/login" exact component={Login} />
       </div>
-
-      
-      <GenerateMovie />
-
-    </div>
+    </Router>
   );
 }
 

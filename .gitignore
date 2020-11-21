@@ -4,7 +4,9 @@
 /node_modules
 /.pnp
 .pnp.js
-movie-recommender*
+
+movie-recommender-3779d-firebase-adminsdk*
+
 
 # testing
 /coverage
