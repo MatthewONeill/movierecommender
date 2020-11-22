@@ -20,15 +20,15 @@ const adb = admin.database();
 //Add user profiles
 app.post('/users/create', (req,res) => {
   admin.auth().createUser(req.body)
-    .then(function(userRecord) {
+    .then((userRecord) => {
       console.log('Successfully created new user:', userRecord.uid);
       req.session.userID = userRecord.uid;
       adb.ref(userRecord.uid);
-      res.sendStatus(200);
+      return res.sendStatus(200);
     })
-    .catch(function(error) {
+    .catch((error) => {
       console.log('Error creating new user:', error);
-      res.sendStatus(400);
+      return res.sendStatus(400);
     });
 });
 
@@ -37,15 +37,15 @@ app.post('/users/create', (req,res) => {
 //This route should only be called when the frontend has done its firebase login
 app.post('/users/login', (req,res) => {
   admin.auth().getUserByEmail(req.body.email)
-  .then(function(userRecord) {
+  .then((userRecord) => {
     console.log('Successfully fetched user data:', userRecord.toJSON());
     req.session.userID = userRecord.uid;
     req.session.loggedIn = true;
-    res.sendStatus(200);
+    return res.sendStatus(200);
   })
-  .catch(function(error) {
+  .catch((error) => {
    console.log('Error fetching user data:', error.errorInfo);
-   res.sendStatus(400);
+   return res.sendStatus(400);
   });
 });
 
