@@ -9,8 +9,7 @@ app.use(cors({ origin: true }));
 require('dotenv').config();
 
 //Firebase initialization
-//var serviceAccount = require(process.env.FIREBASE_CONNECTION);
-var serviceAccount = "movie-recommender-3779d-firebase-adminsdk-lw0o8-98f56ee455.json"; //For my testing purposes because im lazy.
+var serviceAccount = require(process.env.FIREBASE_CONNECTION);
 admin.initializeApp({
   credential: admin.credential.cert(serviceAccount),
   databaseURL: "https://movie-recommender-3779d.firebaseio.com"
