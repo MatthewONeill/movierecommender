@@ -49,6 +49,19 @@ app.post('/users/login', (req,res) => {
   });
 });
 
+app.post('/users/logout', (req,res) => {
+  if(req.session.loggedIn){
+    req.session.destroy((err) => {
+      console.log("Error deleting session.\n");
+      return res.sendStatus(400);
+    });
+    return res.sendStatus(200);
+  }else{
+    console.log("No user logged in.\n");
+    return res.sendStatus(400);
+  }
+});
+
 //Add to the Bad List
 app.post('/badlist/add', (req,res) => {
   if(req.session.loggedIn){
