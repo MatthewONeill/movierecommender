@@ -4,13 +4,13 @@ const express = require('express');
 const cors = require('cors');
 const app = express();
 const session = require('express-session')
-app.use(session({ secret: 'node run serve', cookie: { maxAge: 60000 }}))
+app.use(session({ secret: 'node run serve', cookie: { maxAge: 600000 }}))
 app.use(cors({ origin: true }));
 require('dotenv').config();
 
 //Firebase initialization
-var serviceAccount = require(process.env.FIREBASE_CONNECTION);
-//var serviceAccount = "movie-recommender-3779d-firebase-adminsdk-lw0o8-98f56ee455.json"; //For my testing purposes because im lazy.
+//var serviceAccount = require(process.env.FIREBASE_CONNECTION);
+var serviceAccount = "movie-recommender-3779d-firebase-adminsdk-lw0o8-98f56ee455.json"; //For my testing purposes because im lazy.
 admin.initializeApp({
   credential: admin.credential.cert(serviceAccount),
   databaseURL: "https://movie-recommender-3779d.firebaseio.com"
@@ -23,6 +23,7 @@ app.post('/users/create', (req,res) => {
     .then(function(userRecord) {
       console.log('Successfully created new user:', userRecord.uid);
       req.session.userID = userRecord.uid;
+      adb.ref(userRecord.uid);
       res.sendStatus(200);
     })
     .catch(function(error) {
@@ -50,46 +51,64 @@ app.post('/users/login', (req,res) => {
 
 //Add to the Bad List
 app.post('/badlist/add', (req,res) => {
-  adb.ref('badMovies').push(req.body);
-  return res.sendStatus(200);
+  if(req.session.loggedIn){
+    adb.ref('badMovies').child(req.session.userID).push(req.body);
+    return res.sendStatus(200);
+  }else{
+    console.log("User not logged in. No data posted.");
+    return res.send("User not logged in.").status(400);
+  }
 });
 
 //Add to the Good List
 app.post('/goodlist/add', (req,res) => {
-  adb.ref('goodMovies').push(req.body);
+  if(req.session.loggedIn){
+  adb.ref('goodMovies').child(req.session.userID).push(req.body);
   return res.sendStatus(200);
+  }else{
+    console.log("User not logged in. No data posted.");
+    return res.send("User not logged in.").status(400);
+  }
 });
 
 //Return the Bad List
 app.get('/badlist', (req,res) => {
-  let ref = adb.ref('badMovies');
+  if(req.session.loggedIn){
+    let ref = adb.ref('badMovies').child(req.session.userID);
 
-  ref.limitToLast(10).once("value", (snapshot) => {
-    let array = [];
-    snapshot.forEach((child) => {
-      array.push((child.val()));
-    })
-    return res.send(array).status(200);
-  }, (error) => {
-    console.log("Error:" + error.code);
-    return res.sendStatus(400);
-  });
+    ref.limitToLast(10).once("value", (snapshot) => {
+      let array = [];
+      snapshot.forEach((child) => {
+        array.push((child.val()));
+      })
+      return res.send(array).status(200);
+    }, (error) => {
+      console.log("Error:" + error.code);
+      return res.sendStatus(400);
+    });
+  }else{
+    return res.send("User not logged in.").status(400);
+  }
 });
 
 //Return the Good List
 app.get('/goodlist', (req,res) => {
-  let ref = adb.ref('goodMovies');
+  if(req.session.loggedIn){
+    let ref = adb.ref('goodMovies').child(req.session.userID);
 
-  ref.limitToLast(10).once("value", (snapshot) => {
-    let array = [];
-    snapshot.forEach((child) => {
-      array.push((child.val()));
-    })
-    return res.send(array).status(200);
-  }, (error) => {
-    console.log("Error:" + error.code);
-    return res.sendStatus(400);
-  });
+    ref.limitToLast(10).once("value", (snapshot) => {
+      let array = [];
+      snapshot.forEach((child) => {
+        array.push((child.val()));
+      })
+      return res.send(array).status(200);
+    }, (error) => {
+      console.log("Error:" + error.code);
+      return res.sendStatus(400);
+    });
+  }else{
+    return res.send("User not logged in.").status(400);
+  }
 });
 
 //Allows the firebase thing to do it's stuff
