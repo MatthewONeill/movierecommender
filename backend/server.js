@@ -30,9 +30,8 @@ function createUser(req,res){
     let body = req.body
     let newUser = new userModel({username: body.username, password: body.password, goodlist: [], badlist: []});
     newUser.save((err) => {
-        if(err || results.length == 0){
-            console.log('Could not find user.\n');
-            return res.sendStatus(401);
+        if(err){
+            throw err;
         }
         req.session.loggedIn = true;
         req.session.userID = newUser._id;
@@ -118,7 +117,7 @@ function getBad(req,res){
             if(movies.length <= 10){
                 return res.send(movies).status(200);
             }else{
-                return res.send(arr.slice(Math.max(arr.length - 10, 1))).status(200);
+                return res.send(movies.slice(Math.max(movies.length - 10, 1))).status(200);
             }
         });
     }else{
@@ -136,7 +135,7 @@ function getGood (req,res){
             if(movies.length <= 10){
                 return res.send(movies).status(200);
             }else{
-                return res.send(arr.slice(Math.max(arr.length - 10, 1))).status(200);
+                return res.send(movies.slice(Math.max(movies.length - 10, 1))).status(200);
             }
         });
     }else{
