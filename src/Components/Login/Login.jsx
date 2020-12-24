@@ -1,6 +1,4 @@
 import React, { Component } from "react";
-import firebase from "firebase/app"
-import "firebase/auth";
 import axios from "axios";
  
 class Login extends Component {
@@ -16,13 +14,8 @@ class Login extends Component {
   handleLogin = (e) => {
     e.preventDefault();
 
-    firebase.auth().signInWithEmailAndPassword(this.state.email, this.state.password)
-    .then((user) => {
-      axios.post('http://localhost:5001/movie-recommender-3779d/us-central1/app/users/login', {email: this.state.email})
-    })
-    .catch((error) => {
-        console.log(error.message);
-    })
+    axios.post('http://localhost:5001/movie-recommender-3779d/us-central1/app/users/login', {email: this.state.email})
+
   }
 
   onChangeEmail = (e) =>{
