@@ -28,7 +28,7 @@ app.get('/goodlist', getGood);
 
 function createUser(req,res){
     let body = req.body
-    let newUser = new userModel({username: body.username, password: body.password, goodlist: [], badlist: []});
+    let newUser = new userModel({email: body.email, password: body.password, goodlist: [], badlist: []});
     newUser.save((err) => {
         if(err){
             throw err;
@@ -42,7 +42,7 @@ function createUser(req,res){
 
 function loginUser(req,res){
     let body = req.body;
-    userModel.find({username: body.username}, (err, results) => {
+    userModel.find({email: body.email}, (err, results) => {
         if(err || results.length == 0){
             console.log('Could not find user.\n');
             return res.sendStatus(401);
@@ -80,7 +80,7 @@ function badAdd(req,res){
     if(req.session.loggedIn){
         let body = req.body;
         userModel.findOne({_id: req.session.userID}, (err,results) =>{
-            results.badlist.push(body.movie);
+            results.badlist.push(body);
             results.save((err,results) =>{
                 console.log("List Updated.");
                 return res.sendStatus(200);
@@ -94,8 +94,9 @@ function badAdd(req,res){
 function goodAdd(req,res){
     if(req.session.loggedIn){
         let body = req.body;
+        console.log(body);
         userModel.findOne({_id: req.session.userID}, (err,results) =>{
-            results.goodlist.push(body.movie);
+            results.goodlist.push(body);
             results.save((err,results) =>{
                 console.log("List Updated.");
                 return res.sendStatus(200);

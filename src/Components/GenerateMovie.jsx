@@ -21,8 +21,9 @@ class GenerateMovie extends React.Component{
     }
 
     componentDidMount(){
-        axios.get("http://localhost:5001/movie-recommender-3779d/us-central1/app/badlist")
+        axios.get("http://localhost:5000/badlist")
         .then(response => {
+            console.log(response)
             this.setState({
                 badList: response.data
             })
@@ -31,7 +32,7 @@ class GenerateMovie extends React.Component{
             console.log(error);
         })
 
-        axios.get("http://localhost:5001/movie-recommender-3779d/us-central1/app/goodlist")
+        axios.get("http://localhost:5000/goodlist")
             .then(response => {
                 this.setState({
                     goodList: response.data
@@ -71,7 +72,7 @@ class GenerateMovie extends React.Component{
             releaseDate: this.state.releaseDate
         }
 
-        await axios.post('http://localhost:5001/movie-recommender-3779d/us-central1/app/badlist/add', movie)
+        await axios.post('http://localhost:5000/badlist/add', movie)
             .catch((error) => {
                 console.log(error);
             })
@@ -86,7 +87,7 @@ class GenerateMovie extends React.Component{
             releaseDate: this.state.releaseDate
         }
 
-         await axios.post('http://localhost:5001/movie-recommender-3779d/us-central1/app/goodlist/add', movie)
+         await axios.post('http://localhost:5000/goodlist/add', movie)
             .catch((error) => {
                 console.log(error);
             })
@@ -95,7 +96,7 @@ class GenerateMovie extends React.Component{
     }
 
     refreshBadList = async() => {
-        await axios.get("http://localhost:5001/movie-recommender-3779d/us-central1/app/badlist")
+        await axios.get("http://localhost:5000/badlist")
             .then(response => {
                 this.setState({
                     badList: response.data
@@ -109,7 +110,7 @@ class GenerateMovie extends React.Component{
     }
 
     refreshGoodList = async() => {
-        await axios.get("http://localhost:5001/movie-recommender-3779d/us-central1/app/goodlist")
+        await axios.get("http://localhost:5000/goodlist")
             .then(response => {
                 this.setState({
                     goodList: response.data

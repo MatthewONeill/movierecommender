@@ -14,7 +14,7 @@ class Signup extends React.Component{
     onSubmit = (e) =>{
         e.preventDefault();
     
-        axios.post('http://localhost:5001/movie-recommender-3779d/us-central1/app/users/create', {email: this.state.email, password: this.state.password})
+        axios.post('http://localhost:5000/users/create', {email: this.state.email, password: this.state.password})
           .then((res) => console.log(res))
           .catch((error) => console.log(error));
     }

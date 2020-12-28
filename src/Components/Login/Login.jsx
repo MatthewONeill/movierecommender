@@ -15,8 +15,9 @@ class Login extends Component {
   handleLogin = (e) => {
     e.preventDefault();
 
-    axios.post('http://localhost:5001/movie-recommender-3779d/us-central1/app/users/login', {email: this.state.email})
-
+    axios.post('http://localhost:5000/users/login', {email: this.state.email, password: this.state.password})
+    .then((res) => console.log(res))
+    .catch((error) => console.log(error))
   }
 
   onChangeEmail = (e) =>{
