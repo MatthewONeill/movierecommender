@@ -19,7 +19,7 @@ mongoose.connect(uri, { useNewUrlParser: true, useUnifiedTopology: true});
 let db = mongoose.connection;
 db.on('error', console.error.bind(console, 'connection error:'));
 
-const verifyJWT = (rew, res, next) => {
+const verifyJWT = (req, res, next) => {
     const token = req.headers["x-access-token"];
     if(!token){
         res.send('Token not found').status(400);
