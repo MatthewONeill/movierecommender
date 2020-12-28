@@ -55,10 +55,10 @@ function createUser(req,res){
 
         let id = newUser._id;
         const token = jwt.sign({id}, "pickASecret", {expiresIn: 300}); 
-        res.json({auth: true, token: token, result: newUser});
+        
 
         console.log("User saved.\n");
-        return res.sendStatus(200);
+        return res.json({auth: true, token: token, result: newUser});
     });
 }
 
@@ -105,7 +105,7 @@ function logoutUser(req,res){
 function badAdd(req,res){
     //if(req.session.loggedIn){
         let body = req.body;
-        userModel.findOne({_id: req.session.userID}, (err,results) =>{
+        userModel.findOne({_id: req.userId}, (err,results) =>{
             results.badlist.push(body);
             results.save((err,results) =>{
                 console.log("List Updated.");
@@ -120,7 +120,7 @@ function badAdd(req,res){
 function goodAdd(req,res){
     //if(req.session.loggedIn){
         let body = req.body;
-        userModel.findOne({_id: req.userID}, (err,results) =>{
+        userModel.findOne({_id: req.userId}, (err,results) =>{
             results.goodlist.push(body);
             results.save((err,results) =>{
                 console.log("List Updated.");
@@ -134,7 +134,7 @@ function goodAdd(req,res){
 }
 function getBad(req,res){
     //if(req.session.loggedIn){
-        userModel.findOne({_id: req.userID}, (err,results) =>{
+        userModel.findOne({_id: req.userId}, (err,results) =>{
             if(err){
                 console.log('Could not find user.\n');
                 return res.sendStatus(401);
@@ -152,7 +152,7 @@ function getBad(req,res){
 }
 function getGood (req,res){
     //if(req.session.loggedIn){
-        userModel.findOne({_id: req.session.userID}, (err,results) =>{
+        userModel.findOne({_id: req.userId}, (err,results) =>{
             if(err){
                 console.log('Could not find user.\n');
                 return res.sendStatus(401);

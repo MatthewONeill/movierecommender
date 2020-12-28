@@ -57,11 +57,7 @@ class GenerateMovie extends React.Component{
         let random2 = Math.floor((Math.random() * 30) + 1); // random page starting from 1
         let random3 = Math.floor((Math.random() * 19)); //random item from the page
 
-        await axios.get('https://api.themoviedb.org/3/discover/movie?api_key='+process.env.REACT_APP_API_KEY + '&sort_by=vote_average.gte=0&primary_release_year=' + random + '&page=' + random2, {
-            headers: {
-                "x-access-token": localStorage.getItem("token"),
-            },
-        })
+        await axios.get('https://api.themoviedb.org/3/discover/movie?api_key='+process.env.REACT_APP_API_KEY + '&sort_by=vote_average.gte=0&primary_release_year=' + random + '&page=' + random2)
             .then(response => {
                 this.setState({
                     title: response.data.results[random3].title,
