@@ -53,9 +53,9 @@ function createUser(req,res){
         req.session.loggedIn = true;
         req.session.userID = newUser._id;
 
-        let id = results[0]._id;
+        let id = newUser._id;
         const token = jwt.sign({id}, "pickASecret", {expiresIn: 300}); 
-        res.json({auth: true, token: token, result: result});
+        res.json({auth: true, token: token, result: newUser});
 
         console.log("User saved.\n");
         return res.sendStatus(200);
@@ -75,7 +75,7 @@ function loginUser(req,res){
 
             let id = results[0]._id;
             const token = jwt.sign({id}, "pickASecret", {expiresIn: 300});
-            res.json({auth: true, token: token, result: result});
+            res.json({auth: true, token: token, result: results[0]});
 
             console.log('Logged in user.\n');
             return res.sendStatus(200);
