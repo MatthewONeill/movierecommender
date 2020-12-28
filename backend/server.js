@@ -3,7 +3,9 @@ const mongoose = require('mongoose');
 const cors = require('cors');
 const app = express();
 const session = require('express-session')
-const port = 5000;
+const port = 3000; //Might need changing
+const dotenv = require('dotenv').config();
+let Users = require("./userModel");
 const userModel = require('./userModel');
 
 app.use(session({ resave: true, saveUninitialized:true, secret: 'node run serve', cookie: { maxAge: 600000 }}))
