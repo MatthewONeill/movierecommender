@@ -80,11 +80,14 @@ class GenerateMovie extends React.Component{
             releaseDate: this.state.releaseDate
         }
 
-        await axios.post('http://localhost:5000/badlist/add', {
+        await axios.post('http://localhost:5000/badlist/add', movie, {
             headers: {
                 "x-access-token": localStorage.getItem("token"),
             },    
-        }, movie)
+        })
+            .then((res) => {
+                console.log(res);
+            })
             .catch((error) => {
                 console.log(error);
             })
@@ -99,11 +102,11 @@ class GenerateMovie extends React.Component{
             releaseDate: this.state.releaseDate
         }
 
-         await axios.post('http://localhost:5000/goodlist/add', {
+         await axios.post('http://localhost:5000/goodlist/add', movie, {
             headers: {
                 "x-access-token": localStorage.getItem("token"),
             },
-         }, movie)
+         })
             .catch((error) => {
                 console.log(error);
             })
