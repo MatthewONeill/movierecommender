@@ -21,7 +21,11 @@ class GenerateMovie extends React.Component{
     }
 
     componentDidMount(){
-        axios.get("http://localhost:5000/badlist")
+        axios.get("http://localhost:5000/badlist", {
+            headers: {
+                "x-access-token": localStorage.getItem("token"),
+            },
+        })
         .then(response => {
             console.log(response)
             this.setState({
@@ -32,7 +36,11 @@ class GenerateMovie extends React.Component{
             console.log(error);
         })
 
-        axios.get("http://localhost:5000/goodlist")
+        axios.get("http://localhost:5000/goodlist", {
+            headers: {
+                "x-access-token": localStorage.getItem("token"),
+            },
+        })
             .then(response => {
                 this.setState({
                     goodList: response.data
@@ -49,7 +57,11 @@ class GenerateMovie extends React.Component{
         let random2 = Math.floor((Math.random() * 30) + 1); // random page starting from 1
         let random3 = Math.floor((Math.random() * 19)); //random item from the page
 
-        await axios.get('https://api.themoviedb.org/3/discover/movie?api_key='+process.env.REACT_APP_API_KEY + '&sort_by=vote_average.gte=0&primary_release_year=' + random + '&page=' + random2)
+        await axios.get('https://api.themoviedb.org/3/discover/movie?api_key='+process.env.REACT_APP_API_KEY + '&sort_by=vote_average.gte=0&primary_release_year=' + random + '&page=' + random2, {
+            headers: {
+                "x-access-token": localStorage.getItem("token"),
+            },
+        })
             .then(response => {
                 this.setState({
                     title: response.data.results[random3].title,
@@ -72,7 +84,11 @@ class GenerateMovie extends React.Component{
             releaseDate: this.state.releaseDate
         }
 
-        await axios.post('http://localhost:5000/badlist/add', movie)
+        await axios.post('http://localhost:5000/badlist/add', {
+            headers: {
+                "x-access-token": localStorage.getItem("token"),
+            },    
+        }, movie)
             .catch((error) => {
                 console.log(error);
             })
@@ -87,7 +103,11 @@ class GenerateMovie extends React.Component{
             releaseDate: this.state.releaseDate
         }
 
-         await axios.post('http://localhost:5000/goodlist/add', movie)
+         await axios.post('http://localhost:5000/goodlist/add', {
+            headers: {
+                "x-access-token": localStorage.getItem("token"),
+            },
+         }, movie)
             .catch((error) => {
                 console.log(error);
             })
@@ -96,7 +116,11 @@ class GenerateMovie extends React.Component{
     }
 
     refreshBadList = async() => {
-        await axios.get("http://localhost:5000/badlist")
+        await axios.get("http://localhost:5000/badlist", {
+            headers: {
+                "x-access-token": localStorage.getItem("token"),
+            },
+        })
             .then(response => {
                 this.setState({
                     badList: response.data
@@ -110,7 +134,11 @@ class GenerateMovie extends React.Component{
     }
 
     refreshGoodList = async() => {
-        await axios.get("http://localhost:5000/goodlist")
+        await axios.get("http://localhost:5000/goodlist", {
+            headers: {
+                "x-access-token": localStorage.getItem("token"),
+            },
+        })
             .then(response => {
                 this.setState({
                     goodList: response.data

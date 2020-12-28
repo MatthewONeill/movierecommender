@@ -9,6 +9,7 @@ class Login extends Component {
     this.state = {
       email: "",
       password: "",
+      loginStatus: false
     }
   }
 
@@ -16,7 +17,20 @@ class Login extends Component {
     e.preventDefault();
 
     axios.post('http://localhost:5000/users/login', {email: this.state.email, password: this.state.password})
-    .then((res) => console.log(res))
+    .then((res) => {
+      console.log(res);
+      if(res.data.auth){
+        this.setState({
+          loginStatus: true
+        })
+        localStorage.setItem("token", res.data.token);
+      }
+      else{
+        this.setState({
+          loginStatus: false
+        })
+      }
+    })
     .catch((error) => console.log(error))
   }
 
