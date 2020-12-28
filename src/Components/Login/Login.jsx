@@ -24,6 +24,7 @@ class Login extends Component {
           loginStatus: true
         })
         localStorage.setItem("token", res.data.token);
+        window.location = "/home";
       }
       else{
         this.setState({
@@ -49,6 +50,7 @@ class Login extends Component {
   render() {
     return (
         <form onSubmit={this.handleLogin} className="loginForm">
+          <label style={{fontSize: "24px", marginBottom: "20px"}}>Login</label>
           <label>Email</label>
           <input
             type="text"

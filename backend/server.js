@@ -103,7 +103,6 @@ function logoutUser(req,res){
 }
 
 function badAdd(req,res){
-    //if(req.session.loggedIn){
         let body = req.body;
         userModel.findOne({_id: req.userId}, (err,results) =>{
             results.badlist.push(body);
@@ -112,13 +111,8 @@ function badAdd(req,res){
                 return res.sendStatus(200);
             });
         });
-    //}else{
-        //console.log("User not logged in.");
-        //return res.send("User not logged in.").status(400);
-    //}
 }
 function goodAdd(req,res){
-    //if(req.session.loggedIn){
         let body = req.body;
         userModel.findOne({_id: req.userId}, (err,results) =>{
             results.goodlist.push(body);
@@ -127,13 +121,8 @@ function goodAdd(req,res){
                 return res.sendStatus(200);
             });
         });
-    //}else{
-        //console.log("User not logged in.");
-        //return res.send("User not logged in.").status(400);
-    //}
 }
 function getBad(req,res){
-    //if(req.session.loggedIn){
         userModel.findOne({_id: req.userId}, (err,results) =>{
             if(err){
                 console.log('Could not find user.\n');
@@ -146,12 +135,8 @@ function getBad(req,res){
                 return res.send(movies.slice(Math.max(movies.length - 10, 1))).status(200);
             }
         });
-    //}else{
-        //return res.send("User not logged in.").status(400);
-    //}
 }
 function getGood (req,res){
-    //if(req.session.loggedIn){
         userModel.findOne({_id: req.userId}, (err,results) =>{
             if(err){
                 console.log('Could not find user.\n');
@@ -164,9 +149,6 @@ function getGood (req,res){
                 return res.send(movies.slice(Math.max(movies.length - 10, 1))).status(200);
             }
         });
-    //}else{
-        //return res.send("User not logged in.").status(400);
-    //}
 }
 
 db.once('open', () => {

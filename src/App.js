@@ -4,15 +4,17 @@ import Main from './Components/Main';
 import Login from './Components/Login/Login';
 import Signup from './Components/Login/Signup';
 import Navbar from './Components/Navbar/Navbar';
+import Logout from './Components/Login/Logout';
 
 function App() {
   return (
     <Router>
       <div className="App">
         <Navbar />
-        <Route path="/" exact component={Main} />
-        <Route path="/login" exact component={Login} />
+        <Route path="/" exact component={Login} />
+        <Route path="/home" exact component={Main} />
         <Route path="/signup" exact component={Signup} />
+        <Route path="/logout" exact component={Logout} />
       </div>
     </Router>
   );

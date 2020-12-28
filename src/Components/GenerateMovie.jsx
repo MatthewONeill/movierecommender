@@ -27,10 +27,14 @@ class GenerateMovie extends React.Component{
             },
         })
         .then(response => {
-            console.log(response)
-            this.setState({
-                badList: response.data
-            })
+            if(response.data.auth === false){
+                alert("Please Log In");
+            }
+            else{
+                this.setState({
+                    badList: response.data
+                })
+            }
         })
         .catch((error) => {
             console.log(error);
@@ -42,9 +46,12 @@ class GenerateMovie extends React.Component{
             },
         })
             .then(response => {
-                this.setState({
-                    goodList: response.data
-                })
+                console.log(response);
+                if(response.data.auth !== false){
+                    this.setState({
+                        goodList: response.data
+                    })
+                }
             })
             .catch((error) => {
                 console.log(error);
@@ -121,9 +128,14 @@ class GenerateMovie extends React.Component{
             },
         })
             .then(response => {
-                this.setState({
-                    badList: response.data
-                })
+                if(response.data.auth === false){
+                    alert("Please Log In");
+                }
+                else{
+                    this.setState({
+                        badList: response.data
+                    })
+                }      
             })
             .catch((error) => {
                 console.log(error);
@@ -139,9 +151,14 @@ class GenerateMovie extends React.Component{
             },
         })
             .then(response => {
-                this.setState({
-                    goodList: response.data
-                })
+                if(response.data.auth === false){
+                    alert("Please Log In");
+                }
+                else{
+                    this.setState({
+                        goodList: response.data
+                    })
+                }
             })
             .catch((error) => {
                 console.log(error);
@@ -152,6 +169,7 @@ class GenerateMovie extends React.Component{
     render(){
         return(
             <div className="container">
+                
                 <BadList movies={this.state.badList}/>
 
                 <div className="movieColumn">

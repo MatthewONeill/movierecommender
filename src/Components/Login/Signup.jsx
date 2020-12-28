@@ -34,6 +34,7 @@ class Signup extends React.Component{
     render(){
         return(
             <form onSubmit={this.onSubmit} className="loginForm">
+                <label style={{fontSize: "24px", marginBottom: "20px"}}>Signup</label>
                 <label>Email</label>
                 <input 
                 type="text" 
