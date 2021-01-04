@@ -10,7 +10,7 @@ let Users = require("./userModel");
 const userModel = require('./userModel');
 const passwordHash = require('password-hash');
 
-app.use(session({ resave: true, saveUninitialized:true, secret: 'node run serve', cookie: { maxAge: 600000 }}))
+app.use(session({ resave: true, saveUninitialized:true, secret: process.env.SECRET, cookie: { maxAge: 600000 }}))
 app.use(cors({ origin: true }));
 app.use(express.json()); 
 
@@ -25,7 +25,7 @@ const verifyJWT = (req, res, next) => {
     if(!token){
         res.send('Token not found').status(400);
     }else{
-        jwt.verify(token, "pickASecret", (err, decoded) =>{
+        jwt.verify(token, process.env.NEWSECRET, (err, decoded) =>{
             if(err){
                 res.json({auth: false, message: "Failed to authenticate."});
             }else{
@@ -55,7 +55,7 @@ function createUser(req,res){
         req.session.userID = newUser._id;
 
         let id = newUser._id;
-        const token = jwt.sign({id}, "pickASecret", {expiresIn: 300}); 
+        const token = jwt.sign({id}, process.env.NEWSECRET, {expiresIn: 300}); 
         
 
         console.log("User saved.\n");
@@ -75,7 +75,7 @@ function loginUser(req,res){
             req.session.loggedIn = true;
 
             let id = results[0]._id;
-            const token = jwt.sign({id}, "pickASecret", {expiresIn: 300});
+            const token = jwt.sign({id}, process.env.NEWSECRET, {expiresIn: 300});
 
             console.log('Logged in user.\n');
             return res.json({auth: true, token: token, result: results[0]});
