@@ -14,7 +14,11 @@ class Signup extends React.Component{
     onSubmit = (e) =>{
         e.preventDefault();
     
-        axios.post('http://localhost:5000/users/create', {email: this.state.email, password: this.state.password})
+        var passwordHash = require('password-hash');
+
+        var hashedPassword = passwordHash.generate(this.state.password);
+
+        axios.post('http://localhost:5000/users/create', {email: this.state.email, password: hashedPassword})
           .then((res) => console.log(res))
           .catch((error) => console.log(error));
     }

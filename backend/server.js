@@ -8,6 +8,7 @@ const jwt = require('jsonwebtoken');
 const dotenv = require('dotenv').config();
 let Users = require("./userModel");
 const userModel = require('./userModel');
+const passwordHash = require('password-hash');
 
 app.use(session({ resave: true, saveUninitialized:true, secret: 'node run serve', cookie: { maxAge: 600000 }}))
 app.use(cors({ origin: true }));
@@ -69,7 +70,7 @@ function loginUser(req,res){
             console.log('Could not find user.\n');
             return res.sendStatus(401);
         }
-        if(results[0].password == body.password){
+        if(passwordHash.verify(body.password,results[0].password)){
             req.session.userID = results[0]._id;
             req.session.loggedIn = true;
 
